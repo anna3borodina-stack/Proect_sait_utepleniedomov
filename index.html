@@ -146,19 +146,10 @@
     .btn-primary:hover { background: var(--accent-warm-bright); color: #fff; }
     .btn-secondary { background: var(--accent-safety); color: var(--ink); }
     .btn-secondary:hover { background: #fff200; color: var(--ink); }
-    .hero {
-      padding: 48px 0 64px;
-      background:
-        linear-gradient(135deg, rgba(255, 230, 0, 0.95) 0%, rgba(255, 120, 0, 0.55) 42%, rgba(0, 120, 255, 0.45) 100%),
-        repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,0,0,0.06) 10px, rgba(0,0,0,0.06) 12px);
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+    .lead { color: var(--text-muted); margin: 0 0 16px; max-width: 62ch; }
+    .section-head.center { text-align: center; }
+    .section-head.center .lead { margin-inline: auto; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 20px; }
     .eyebrow {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -172,30 +163,204 @@
       border: 2px solid var(--ink);
       box-shadow: 3px 3px 0 var(--ink);
     }
-    .hero .hero-grid > .reveal:first-of-type {
-      background: #fff;
-      padding: 28px 26px;
-      border: 3px solid var(--ink);
-      border-radius: var(--radius);
-      box-shadow: 10px 10px 0 var(--accent-warm), 0 0 0 2px var(--ink);
-    }
-    .hero h1 { font-size: clamp(1.75rem, 4vw, 2.35rem); line-height: 1.15; margin: 0 0 16px; color: var(--ink); font-weight: 900; }
-    .lead { color: var(--text-muted); margin: 0 0 16px; max-width: 62ch; }
-    .section-head.center { text-align: center; }
-    .section-head.center .lead { margin-inline: auto; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 20px; }
-    .hero-bullets { margin: 0; padding-left: 1.2em; color: var(--text-muted); }
-    .hero-bullets li { margin-bottom: 6px; }
-    .hero-note { font-size: 0.9rem; color: var(--text-muted); margin: 20px 0 0; }
-    .hero-visual-wrap svg {
+    /* ——— Полноэкранный hero-баннер (спокойный премиальный тон) ——— */
+    .hero-banner {
+      position: relative;
+      isolation: isolate;
       width: 100%;
-      max-width: 480px;
-      height: auto;
+      min-height: min(calc(100svh - var(--header-h)), 960px);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: #1a2332;
+    }
+    .hero-banner__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-banner__media picture,
+    .hero-banner__media img {
+      width: 100%;
+      height: 100%;
       display: block;
-      margin-inline: auto;
-      border-radius: var(--radius);
-      border: 3px solid var(--ink);
-      box-shadow: 8px 8px 0 var(--accent-blue), 0 0 0 2px var(--ink);
+    }
+    .hero-banner__media img {
+      object-fit: cover;
+      object-position: 68% center;
+      transform: scale(1.06);
+      transform-origin: center center;
+      will-change: transform;
+    }
+    @media (max-width: 1024px) {
+      .hero-banner__media img { object-position: 55% center; }
+    }
+    @media (max-width: 768px) {
+      .hero-banner {
+        min-height: min(calc(100svh - var(--header-h)), 820px);
+        align-items: flex-end;
+        padding-bottom: clamp(1.75rem, 6vw, 2.75rem);
+      }
+      .hero-banner__media img {
+        object-position: center 28%;
+        transform: scale(1.04);
+      }
+    }
+    .hero-banner__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        105deg,
+        rgba(18, 24, 32, 0.91) 0%,
+        rgba(18, 24, 32, 0.78) 34%,
+        rgba(18, 24, 32, 0.42) 52%,
+        rgba(18, 24, 32, 0.14) 68%,
+        transparent 88%
+      );
+    }
+    @media (max-width: 768px) {
+      .hero-banner__overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(18, 24, 32, 0.2) 0%,
+          rgba(18, 24, 32, 0.45) 32%,
+          rgba(18, 24, 32, 0.82) 62%,
+          rgba(18, 24, 32, 0.94) 100%
+        );
+      }
+    }
+    .hero-banner__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding-block: clamp(2rem, 5vh, 3.5rem);
+    }
+    .hero-banner__content {
+      max-width: min(34.5rem, 100%);
+    }
+    @media (min-width: 1100px) {
+      .hero-banner__content { max-width: 36rem; }
+    }
+    .hero-banner h1 {
+      font-size: clamp(1.85rem, 4.2vw, 2.65rem);
+      line-height: 1.12;
+      margin: 0 0 1.1rem;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+    .hero-banner .hero-lead {
+      margin: 0 0 1.5rem;
+      max-width: 38rem;
+      font-size: clamp(1rem, 1.35vw, 1.125rem);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 400;
+    }
+    .hero-banner__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      margin-bottom: 1.35rem;
+    }
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .hero-btn:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+    .hero-btn--primary {
+      background: #fff;
+      color: #1a2332;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+    }
+    .hero-btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+    }
+    .hero-btn--ghost {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .hero-btn--ghost:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+    .hero-checks {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .hero-checks li {
+      position: relative;
+      padding-left: 1.35rem;
+      font-size: 0.94rem;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.86);
+    }
+    .hero-checks li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(232, 196, 140, 0.95);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+    }
+    .hero-banner .hero-note {
+      margin: 1.25rem 0 0;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.62);
+      max-width: 32rem;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-banner__content > * {
+        opacity: 0;
+        animation: heroEnter 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .hero-banner__content h1 { animation-delay: 0.06s; }
+      .hero-banner__content .hero-lead { animation-delay: 0.14s; }
+      .hero-banner__content .hero-banner__actions { animation-delay: 0.22s; }
+      .hero-banner__content .hero-checks { animation-delay: 0.3s; }
+      .hero-banner__content .hero-note { animation-delay: 0.38s; }
+    }
+    @keyframes heroEnter {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-banner__content > * {
+        opacity: 1;
+        animation: none;
+      }
     }
     .section { padding: 72px 0; }
     .section-alt { background: var(--bg-alt); border-block: 3px solid var(--ink); }
@@ -546,49 +711,48 @@
   </header>
 
   <main id="main-content">
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div class="reveal is-visible">
-          <p class="eyebrow">Услуга под ключ</p>
+    <!-- Заглушка: современный дом. Замените src/srcset на своё фото: дом в кадре + 2–3 мастера, фасад / утепление, без хаоса. -->
+    <section class="hero-banner" id="hero" aria-labelledby="hero-title">
+      <div class="hero-banner__media">
+        <picture>
+          <source
+            type="image/jpeg"
+            media="(max-width: 768px)"
+            srcset="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=82 900w,
+                    https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=82 1200w"
+            sizes="100vw">
+          <source
+            type="image/jpeg"
+            srcset="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=82 1600w,
+                    https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=82 1920w,
+                    https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=2400&q=82 2400w"
+            sizes="100vw">
+          <img
+            class="hero-banner__img"
+            src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1920&q=82"
+            width="1920"
+            height="1080"
+            alt="Современный частный дом — пример объекта для наружного утепления и отделки фасада"
+            fetchpriority="high"
+            decoding="async">
+        </picture>
+      </div>
+      <div class="hero-banner__overlay" aria-hidden="true"></div>
+      <div class="hero-banner__inner container">
+        <div class="hero-banner__content">
           <h1 id="hero-title">Наружное утепление домов и фасадов под ключ</h1>
-          <p class="lead">Помогаем сделать дом теплее, сократить теплопотери и привести фасад в аккуратный, долговечный вид. Без лишних работ, с понятной сметой и спокойным человеческим подходом.</p>
-          <div class="hero-actions">
-            <a href="#calculator" class="btn btn-primary">Рассчитать стоимость</a>
-            <a href="#contact" class="btn btn-secondary">Получить консультацию</a>
+          <p class="hero-lead">Помогаем сделать дом теплее, сократить теплопотери и привести фасад в аккуратный, долговечный вид. Без лишних работ, с понятной сметой и спокойным человеческим подходом.</p>
+          <div class="hero-banner__actions">
+            <a href="#calculator" class="hero-btn hero-btn--primary">Рассчитать стоимость</a>
+            <a href="#contact" class="hero-btn hero-btn--ghost">Получить консультацию</a>
           </div>
-          <ul class="hero-bullets">
+          <ul class="hero-checks">
             <li>Выезд на объект</li>
             <li>Понятная смета до начала работ</li>
             <li>Подбор решения под ваш дом</li>
             <li>Аккуратное выполнение по технологии</li>
           </ul>
           <p class="hero-note">Работаем с частными домами, дачами, коттеджами и фасадами под обновление.</p>
-        </div>
-        <div class="hero-visual-wrap reveal is-visible" aria-hidden="true">
-          <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Схематичное изображение фасада с утеплением">
-            <defs>
-              <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#ffe600"/>
-                <stop offset="45%" style="stop-color:#ff9a26"/>
-                <stop offset="100%" style="stop-color:#0088ff"/>
-              </linearGradient>
-              <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#0088ff;stop-opacity:0.9"/>
-                <stop offset="100%" style="stop-color:#ff4d00;stop-opacity:0.95"/>
-              </linearGradient>
-            </defs>
-            <rect width="480" height="360" fill="url(#g1)"/>
-            <rect x="60" y="40" width="360" height="280" rx="12" fill="#ffffff" stroke="#0a0a0a" stroke-width="3"/>
-            <rect x="80" y="60" width="80" height="100" rx="4" fill="#fff9c4" stroke="#0a0a0a" stroke-width="2"/>
-            <rect x="180" y="60" width="80" height="100" rx="4" fill="#fff9c4" stroke="#0a0a0a" stroke-width="2"/>
-            <rect x="280" y="60" width="80" height="100" rx="4" fill="#fff9c4" stroke="#0a0a0a" stroke-width="2"/>
-            <rect x="80" y="180" width="80" height="120" rx="4" fill="#fff9c4" stroke="#0a0a0a" stroke-width="2"/>
-            <rect x="180" y="180" width="180" height="120" rx="4" fill="#fff9c4" stroke="#0a0a0a" stroke-width="2"/>
-            <rect x="72" y="52" width="12" height="256" rx="2" fill="url(#g2)" opacity="1"/>
-            <text x="95" y="200" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#0a0a0a" transform="rotate(-90 95 200)">слой утепления</text>
-            <line x1="100" y1="70" x2="420" y2="70" stroke="#0057ff" stroke-width="3" opacity="0.85"/>
-            <line x1="100" y1="290" x2="420" y2="290" stroke="#ff4d00" stroke-width="3" opacity="0.9"/>
-          </svg>
         </div>
       </div>
     </section>
@@ -1061,6 +1225,26 @@
       });
     });
   }
+
+  (function heroParallax() {
+    var img = document.querySelector('.hero-banner__img');
+    var section = document.getElementById('hero');
+    if (!img || !section) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.matchMedia('(min-width: 769px)').matches) return;
+    var scale = 'scale(1.06)';
+    function tick() {
+      var rect = section.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) {
+        img.style.transform = scale;
+        return;
+      }
+      var y = Math.min(window.scrollY * 0.055, 40);
+      img.style.transform = scale + ' translate3d(0,' + y + 'px,0)';
+    }
+    window.addEventListener('scroll', tick, { passive: true });
+    tick();
+  })();
 
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
